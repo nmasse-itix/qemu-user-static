@@ -1,9 +1,10 @@
 FROM quay.io/fedora/fedora:42
 
-RUN dnf install -y qemu-user-static \
- && dnf clean all
+ADD https://raw.githubusercontent.com/nmasse-itix/qemu-user-static/refs/heads/main/container-entrypoint /container-entrypoint
 
-ADD container-entrypoint /
+RUN dnf install -y qemu-user-static \
+ && dnf clean all \
+ && chmod +x /container-entrypoint
 
 ENTRYPOINT ["/container-entrypoint"]
 CMD []
